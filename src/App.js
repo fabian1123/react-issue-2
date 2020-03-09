@@ -1,14 +1,14 @@
 import React from 'react';
 import Filtro from './issues/Filtro';
-import IssuesList from './issues/IssuesList';
+import IssuesList from './issues/IssueList';
 import { sampleData } from './sampleData';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import NewIssue from './issues/NewIssue';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Issues from './issues/Issues';
 
 //NOTA: Renombrar la clase App.js como Issue.js
 
 class App extends React.Component {
-  constructor(props) {
+  /*constructor(props) {
     super(props);
 
     this.state = {//Estoy creando una variable dentro del estado llamada issues y la estoy inicializando con el sampleData
@@ -29,27 +29,22 @@ class App extends React.Component {
       textFiltro: text,//Conectamos el campo de texto.
       issuesFiltrados: filtrados
     });
-  }
- 
+  }*/
+
   render() {
     return (
-      //textFiltro es la propiedad para leer y el handleFiltroChange es la propiedad para escribir
-      //texto y handleChange son los nombres que le estoy pasando al componente filtro
-      //Necesito el switch para que cambie también la URL  
-      //Si primero pongo el path / van a coincidir todas las url, por eso la pongo al últmo
       <BrowserRouter>
-          <h3>Issues</h3>
-        <Switch>
-          <Route path="/new">
-            <NewIssue />
-          </Route>
-          <Route exact path="/">
-            <div>
-              <Filtro texto={this.state.textFiltro} handleChange={this.handleFiltroChange}/>
-              <IssuesList data={this.state.issuesFiltrados} />//Coloco issues en lugar de sampleData ya que esta es la variable que toma el valor de sampleData
-            </div>
-          </Route>
-        </Switch>
+        <h3>Issues</h3>
+        <div className="app">
+          <Switch>
+            <Route path="/issues">
+              <Issues />
+            </Route>
+            <Route>
+              <Redirect path="/" to="/issues" />
+            </Route>
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }

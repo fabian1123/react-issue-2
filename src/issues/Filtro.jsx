@@ -1,17 +1,17 @@
 import React from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 //Recibo de App.js el texto y el manejador del evento
-function Filtro({texto, handleChange}) {
+function Filtro(props) {
     return (
         <Form.Group as={Row}>
             <Form.Label column sm="2">Filtro</Form.Label>
             <Col sm="8">
-                <Form.Control name="filtro" value={texto} onChange={handleChange}/>
+                <Form.Control name="filtro" value={props.filtro} onChange={props.onFiltroChanged}/>
             </Col>
             <Col>
-                <Link to="/new">
+                <Link to={`${props.match.url}/new`}>
                     <Button variant="success">Nuevo</Button>
                 </Link>
             </Col>
@@ -19,4 +19,4 @@ function Filtro({texto, handleChange}) {
     );
 }
 
-export default Filtro;
+export default withRouter(Filtro);

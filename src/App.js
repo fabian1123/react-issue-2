@@ -34,7 +34,6 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <h3>Issues</h3>
         <div className="app">
           <Switch>
             <Route path="/issues">

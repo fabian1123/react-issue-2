@@ -33,30 +33,35 @@ class NewIssue extends React.Component {
         return (
             <div>
                 <Container>
-                <h4>Nuevo Issue</h4>
-                <Formik onSubmit={(this.onSubmit)}
-                    initialValues={initialValues}>
-                    {() => (//Aquí devuelvo el formulario
-                        <FormikForm>
-                            <Form.Group>
-                                <Form.Label>Título</Form.Label>
-                                <Field name="titulo" required as={Field} as={Form.Control/*Le coloco as={Form.Control} para no perder los estilos de bootstrap cuando voy a usar Field(elemento de Formik y no de Bootstrap) */} />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Contenido</Form.Label>
+                    <h4>Nuevo Issue</h4>
+                    <Formik onSubmit={(this.onSubmit)}
+                        initialValues={initialValues}>
+                        {() => (//Aquí devuelvo el formulario
+                            <FormikForm>
+                                <Form.Group>
                                 <Col sm="10" lg="11">
-                                    <Field name="contenido" required as={Field /**Esto es para que me obligue a llenar el campo */} as="textarea" />
-                                </Col>
+                                    <Form.Label>Título</Form.Label>
+                                    <Field name="titulo" required as={Field} as={Form.Control/*Le coloco as={Form.Control} para no perder los estilos de bootstrap cuando voy a usar Field(elemento de Formik y no de Bootstrap) */} />
+                                </ Col>
+                                </Form.Group>
+                                <Form.Group>
 
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Usuario</Form.Label>
-                                <Field name="usuario" required as={Field} as={Form.Control} />
-                            </Form.Group>
-                            <Button type="submit">Crear</Button>
-                        </FormikForm>
-                    )}
-                </Formik>
+                                    <Col sm="10" lg="11">
+                                        <Form.Label>Contenido</Form.Label>
+                                        <Form.Control name="contenido" component="textarea" rows="10" required as={Field /**Esto es para que me obligue a llenar el campo */} as={Field} />
+                                    </Col>
+
+                                </Form.Group>
+                                <Form.Group>
+                                <Col sm="10" lg="11">
+                                    <Form.Label>Usuario</Form.Label>
+                                    <Field name="usuario" required as={Field} as={Form.Control} />
+                                </ Col>
+                                </Form.Group>
+                                <Button type="submit">Crear</Button>
+                            </FormikForm>
+                        )}
+                    </Formik>
                 </Container>
             </div>
         )

@@ -53,7 +53,6 @@ class Issues extends React.Component {
     console.log('match', this.props.match);
     return (
       <React.Fragment>
-        <h3>Issues</h3>
         <Switch>
           <Route path={`${this.props.match.path}/new`}>
             <NewIssue onNewIssue={this.onNewIssue.bind(this)} />

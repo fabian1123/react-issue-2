@@ -4,6 +4,8 @@ import IssuesList from './issues/IssueList';
 import { sampleData } from './sampleData';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Issues from './issues/Issues';
+import { Container, Navbar } from 'react-bootstrap';
+import './app.css';
 
 //NOTA: Renombrar la clase App.js como Issue.js
 
@@ -33,18 +35,26 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div className="app">
-          <Switch>
-            <Route path="/issues">
-              <Issues />
-            </Route>
-            <Route>
-              <Redirect path="/" to="/issues" />
-            </Route>
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div>
+        <Navbar bg="dark" variant="dark" className="NavBar">
+          <Navbar.Brand href="/issues">
+            <h4 className="tituloNBar"> Issues </h4>
+          </Navbar.Brand>
+        </Navbar>
+
+        <BrowserRouter>
+          <div className="app">
+            <Switch>
+              <Route path="/issues">
+                <Issues />
+              </Route>
+              <Route>
+                <Redirect path="/" to="/issues" />
+              </Route>
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
     );
   }
 }

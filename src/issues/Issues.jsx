@@ -5,6 +5,7 @@ import NewIssue from "./NewIssue";
 import { Switch, Route, withRouter } from "react-router-dom";
 import IssueDetail from "./IssueDetail";
 import Filtro from "./Filtro";
+import ConnectionIssue from './ConecctionIssue';
 
 class Issues extends React.Component {
   constructor(props) {
@@ -52,7 +53,9 @@ class Issues extends React.Component {
   render() {
     console.log('match', this.props.match);
     return (
+      
       <React.Fragment>
+                <ConnectionIssue />
         <Switch>
           <Route path={`${this.props.match.path}/new`}>
             <NewIssue onNewIssue={this.onNewIssue.bind(this)} />

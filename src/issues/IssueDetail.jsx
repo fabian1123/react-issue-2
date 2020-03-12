@@ -8,22 +8,31 @@ import moment from "moment";
 import ReactMarkdown from "react-markdown";
 import { Container } from "react-bootstrap";
 import './IssueDetail.css';
+import { axiosGET, axiosGetById } from './IssueApiList';
 
+var ID = null;
 
 class IssueDetail extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {};
+
+    ID = this.props.match.params.issueId;
   }
 
   componentDidMount() {
     this.loadIssue();
+    console.log("Item api por id:");
+    let itemApiPorId = axiosGetById(ID);
+    console.log(itemApiPorId);
   }
 
+
+
   loadIssue() {
-    const id = Number(this.props.match.params.issueId);
-    const issue = get(id);
+    //const id = Number(this.props.match.params.issueId); Ya no es un número
+    const issue = get(ID);
     this.setState({ issue });
   }
 
@@ -43,7 +52,7 @@ class IssueDetail extends React.Component {
     return (
       <div className="issue-detail">
         <Container>
-          <Link to="/" className="issue-volver">&lt; Volver</Link>
+        <Link to="/" className="issue-volver">&lt; Volver</Link>
           {issue &&
             <div>
               <h3>{issue.titulo} <span className="issue-id espacio  ">{`#${issue.id}`}</span></h3>
@@ -84,5 +93,42 @@ class IssueDetail extends React.Component {
   }
 
 }
-
+/**
+ * <Link to="/" className="issue-volver">&lt; Volver</Link>
+          {issue &&
+            <div>
+              <h3>{issue.titulo} <span className="issue-id espacio  ">{`#${issue.id}`}</span></h3>
+              {issue.estado === 'open' && <Badge pill variant="success">Abierto</Badge>}
+              {issue.estado === 'closed' && <Badge pill variant="danger">Cerrado</Badge>}
+              <span className="issue-usuario"> {issue.usuario}</span>
+              <span className="issue-fecha"> abrió este issue {moment.unix(issue.fecha).fromNow()}</span>
+              <div className="issue-contenido espacio">
+                <Card>
+                  <Card.Body>
+                    <ReactMarkdown className="espacio" source={issue.contenido} />
+                  </Card.Body>
+                </Card>
+              </div>
+              {issue.estado === 'closed' &&
+                <div className="issue-estado espacio">
+                  <Button onClick={this.onReabrir.bind(this)}>Reabrir</Button>
+                  <span className="espacio" title={moment.unix(issue.modificado).format('LLLL')}>
+                    Cerrado {moment.unix(issue.modificado).fromNow()}
+                  </span>
+                </div>
+              }
+              {issue.estado === 'open' &&
+                <div className="issue-estado espacio">
+                  <Button onClick={this.onCerrar.bind(this)}>Cerrar</Button>
+                  {issue.modificado &&
+                    <span className="espacio" title={moment.unix(issue.modificado).format('LLLL')}>
+                      Reabierto {moment.unix(issue.modificado).fromNow()}
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+          }
+ * 
+ */
 export default withRouter(IssueDetail);

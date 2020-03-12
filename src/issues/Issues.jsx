@@ -5,6 +5,8 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import IssueDetail from "./IssueDetail";
 import Filtro from "./Filtro";
 import IssueApiList from "./IssueApiList";
+import DetalleApi from './DetalleApi';
+
 
 class Issues extends React.Component {
   constructor(props) {

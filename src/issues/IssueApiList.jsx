@@ -10,6 +10,29 @@ const headers = {
     'Accept': 'application/json'
 }
 
+export function axiosGET() {
+    axios.get(apiUrl, {
+        headers: headers
+    })
+        .then(response => {
+            console.log("Dentro del then");
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}
+
+export function axiosGetById(id){
+        axios.get(apiUrl + "/" + id, {headers: headers})
+        .then(response => {
+            console.log("Dentro de axiosGetById");
+            console.log(response.data);
+            return response.data
+        })
+}
+
 class IssueApiList extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +40,8 @@ class IssueApiList extends React.Component {
             data: []
         };
 
-        this.axiosGET();
+        axiosGET();
+        axiosGetById("2c4fd081-017f-4618-9d6f-2a65c2638630");
         //this.axiosPOST(); Se va a hacer un post si descomento esto
     }
 
@@ -39,19 +63,6 @@ class IssueApiList extends React.Component {
             .catch(error => {
                 console.log(error);
             });
-    }
-
-    axiosGET() {
-        axios.get(apiUrl, {
-            headers: headers
-        })
-            .then(response => {
-                console.log("Dentro del then");
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            })
     }
 
     componentDidMount() {

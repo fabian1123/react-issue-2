@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, Container } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 import './IssueList.css';

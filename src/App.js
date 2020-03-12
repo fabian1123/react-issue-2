@@ -1,10 +1,7 @@
 import React from 'react';
-import Filtro from './issues/Filtro';
-import IssuesList from './issues/IssueList';
-import { sampleData } from './sampleData';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Issues from './issues/Issues';
-import { Container, Navbar } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 import './app.css';
 
 //NOTA: Renombrar la clase App.js como Issue.js

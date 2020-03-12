@@ -8,10 +8,10 @@ function Lista(props){
         <ListGroup className="Lista">
           {props.data && props.data.map(issueItem => {
             return (
-            <ListGroup.Item key={issueItem.fecha}>
-              <h6><Link to={`${props.match.url}/${issueItem.fecha}`}>{issueItem.titulo}</Link></h6>
+            <ListGroup.Item key={issueItem.id}>
+              <h6><Link to={`${props.match.url}/${issueItem.id}`}>{issueItem.titulo}</Link></h6>
               <div>
-              #{issueItem.fecha} {issueItem.estado === "open" ? "abierto" : "cerrado"} {moment.unix(issueItem.estado === "open" ? issueItem.fecha : issueItem.modificado).fromNow()} por {issueItem.usuario}
+              #{issueItem.id} {issueItem.estado === "opened" ? "abierto" : "cerrado"} {moment.unix(issueItem.estado === "opened" ? issueItem.fecha : issueItem.modificado).fromNow()} por {issueItem.usuario}
               </div>
             </ListGroup.Item>
             );

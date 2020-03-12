@@ -1,5 +1,5 @@
 import React from 'react';
-import Lista from './Lista';
+import Lista from './ListaApi';
 import axios from 'axios';
 
 const apiKey = "basic Z3VpbGhlcm1lLmJldGE6YmV0YQ==";
@@ -42,8 +42,6 @@ class IssueApiList extends React.Component {
     }
 
     axiosGET() {
-
-
         axios.get(apiUrl, {
             headers: headers
         })
@@ -89,6 +87,7 @@ class IssueApiList extends React.Component {
                     datos.titulo = issue.titulo;
                     datos.modificado = issue.modificado;
                     datos.usuario = issue.usuario;
+                    datos.id = issue.id;
 
                     data.push(datos);
                 }

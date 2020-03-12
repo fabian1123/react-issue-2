@@ -16,19 +16,25 @@ class IssueDetail extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { issue: [] };
 
     ID = this.props.match.params.issueId;
   }
 
   componentDidMount() {
-    this.loadIssue();
-    console.log("Item api por id:");
-    let itemApiPorId = axiosGetById(ID);
-    console.log(itemApiPorId);
+    //this.loadIssue();
+    this.obtenerIssue();
   }
 
-
+  obtenerIssue(){
+    console.log("Item api por id:");
+    axiosGetById(ID).then(issueFiltrado => {console.log("result get: ", issueFiltrado);
+    
+    console.log(issueFiltrado);
+    this.setState({ issue: issueFiltrado });
+  });
+    
+  }
 
   loadIssue() {
     //const id = Number(this.props.match.params.issueId); Ya no es un número

@@ -1,6 +1,7 @@
 import React from 'react';
 import Lista from './ListaApi';
 import axios from 'axios';
+import ListaApi from './ListaApi';
 
 const apiKey = "basic Z3VpbGhlcm1lLmJldGE6YmV0YQ==";
 const apiUrl = `http://beta-api.sitrack.io/edna/Issue`;
@@ -8,6 +9,41 @@ const headers = {
     'content-type': 'application/json',
     'Authorization': apiKey,
     'Accept': 'application/json'
+}
+
+export function cargarIssues() {
+    return fetch(apiUrl, {
+        headers: {
+            'content-type': 'application/json',
+            Authorization: apiKey,
+            'Accept': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .then(res => {
+            const data = [];
+            console.log(res);
+            console.log(res.length);
+
+            for (var i = 0; i < res.length; i++) {
+                const issue = res[i];
+                const datos = {};
+                // llenar el objeto datos con los items del issue
+
+                datos.fecha = issue.fecha;
+                datos.contenido = issue.contenido;
+                datos.estado = issue.estado;
+                datos.titulo = issue.titulo;
+                datos.modificado = issue.modificado;
+                datos.usuario = issue.usuario;
+                datos.id = issue.id;
+
+                data.push(datos);
+            }
+            console.log(data);
+
+            return data;
+        });
 }
 
 export function axiosGET() {
@@ -25,13 +61,18 @@ export function axiosGET() {
 }
 
 export function axiosGetById(id){
-        axios.get(apiUrl + "/" + id, {headers: headers})
-        .then(response => {
+    return fetch(apiUrl + "/" + id, {
+        headers: headers
+      })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+    }
+        /*.then(response => {
             console.log("Dentro de axiosGetById");
             console.log(response.data);
-            return response.data
-        })
-}
+            return response
+        })*/
+
 
 class IssueApiList extends React.Component {
     constructor(props) {
@@ -41,7 +82,6 @@ class IssueApiList extends React.Component {
         };
 
         axiosGET();
-        axiosGetById("2c4fd081-017f-4618-9d6f-2a65c2638630");
         //this.axiosPOST(); Se va a hacer un post si descomento esto
     }
 
@@ -66,52 +106,19 @@ class IssueApiList extends React.Component {
     }
 
     componentDidMount() {
-        this.cargarIssues().then(data => {
+        cargarIssues().then(data => {
             this.setState({
                 data: data
             });
         });
     }
 
-    cargarIssues() {
-        return fetch(apiUrl, {
-            headers: {
-                'content-type': 'application/json',
-                Authorization: apiKey,
-                'Accept': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                const data = [];
-                console.log(res);
-                console.log(res.length);
-
-                for (var i = 0; i < res.length; i++) {
-                    const issue = res[i];
-                    const datos = {};
-                    // llenar el objeto datos con los items del issue
-
-                    datos.fecha = issue.fecha;
-                    datos.contenido = issue.contenido;
-                    datos.estado = issue.estado;
-                    datos.titulo = issue.titulo;
-                    datos.modificado = issue.modificado;
-                    datos.usuario = issue.usuario;
-                    datos.id = issue.id;
-
-                    data.push(datos);
-                }
-                console.log(data);
-
-                return data;
-            });
-    }
+    
 
     render() {
         return (
             <div>
-                <Lista data={this.state.data} />
+                <ListaApi data={this.state.data} />
             </div>
         )
     }

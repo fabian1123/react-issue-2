@@ -10,8 +10,8 @@ function Lista(props){
             return (
             <ListGroup.Item key={issueItem.id}>
               <h6><Link to={`${props.match.url}/${issueItem.id}`}>{issueItem.titulo}</Link></h6>
-              <div>
-              #{issueItem.id} {issueItem.estado === "opened" ? "abierto" : "cerrado"} {moment.unix(issueItem.estado === "opened" ? issueItem.fecha : issueItem.modificado).fromNow()} por {issueItem.usuario}
+              <div><small>
+              #{issueItem.id}</small> {issueItem.estado === "opened" ? "abierto" : "cerrado"} {moment.unix(issueItem.estado === "opened" ? issueItem.fecha : issueItem.modificado).fromNow()} por {issueItem.usuario}
               </div>
             </ListGroup.Item>
             );

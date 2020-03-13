@@ -1,7 +1,7 @@
 import React from 'react';
-import Lista from './ListaApi';
 import axios from 'axios';
 import ListaApi from './ListaApi';
+import moment from 'moment';
 
 const apiKey = "basic Z3VpbGhlcm1lLmJldGE6YmV0YQ==";
 const apiUrl = `http://beta-api.sitrack.io/edna/Issue`;
@@ -60,19 +60,55 @@ export function axiosGET() {
         })
 }
 
-export function axiosGetById(id){
+export function axiosGetById(id) {
     return fetch(apiUrl + "/" + id, {
         headers: headers
-      })
+    })
         .then(res => res.json())
-        .catch(error => console.log(error));
-    }
-        /*.then(response => {
-            console.log("Dentro de axiosGetById");
-            console.log(response.data);
-            return response
-        })*/
+        .then(res => {
+            const issue = res;
+            return issue;
+        });
+}
 
+export function axiosChangeState(id, estado){
+    let issue = axiosGetById(id).then(issue =>{
+
+        axios.put(apiUrl + "/" + id, {
+            titulo: issue.titulo,
+            contenido: issue.contenido,
+            estado: estado,
+            usuario: issue.usuario,
+            fecha: issue.fecha = issue.fecha,
+            modificado: moment().unix()
+    
+        }, {headers: headers})
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }) ;
+    //Último cambio
+
+    
+}
+
+export function axiosPOST(issue) {
+    axios.post(apiUrl, {
+        titulo: issue.titulo,
+        contenido: issue.contenido,
+        estado: "open",
+        usuario: issue.usuario,
+        fecha: issue.fecha = moment().unix(),
+        modificado: null
+
+    }, { headers: headers })
+        .then(response => {
+            console.log("Respuesta del servidor");
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
 
 class IssueApiList extends React.Component {
     constructor(props) {
@@ -85,25 +121,7 @@ class IssueApiList extends React.Component {
         //this.axiosPOST(); Se va a hacer un post si descomento esto
     }
 
-    axiosPOST() {
-        axios.post(apiUrl, {
 
-            titulo: "Prueba Axios",
-            contenido: "Post Desde axios",
-            estado: "opened",
-            usuario: "Fabian",
-            fecha: 1579263883,
-            modificado: 1579587883
-
-        }, { headers: headers })
-            .then(response => {
-                console.log("Respuesta del servidor");
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
 
     componentDidMount() {
         cargarIssues().then(data => {
@@ -113,7 +131,7 @@ class IssueApiList extends React.Component {
         });
     }
 
-    
+
 
     render() {
         return (

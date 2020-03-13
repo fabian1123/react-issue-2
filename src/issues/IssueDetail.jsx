@@ -8,7 +8,7 @@ import moment from "moment";
 import ReactMarkdown from "react-markdown";
 import { Container } from "react-bootstrap";
 import './IssueDetail.css';
-import { axiosGET, axiosGetById } from './IssueApiList';
+import { axiosChangeState, axiosGetById } from './IssueApiList';
 
 var ID = null;
 
@@ -30,27 +30,21 @@ class IssueDetail extends React.Component {
     console.log("Item api por id:");
     axiosGetById(ID).then(issueFiltrado => {console.log("result get: ", issueFiltrado);
     
-    console.log(issueFiltrado);
     this.setState({ issue: issueFiltrado });
   });
     
   }
 
-  loadIssue() {
-    //const id = Number(this.props.match.params.issueId); Ya no es un número
-    const issue = get(ID);
-    this.setState({ issue });
-  }
 
   onCerrar() {
-    const { issue } = this.state;
+    axiosChangeState(ID, "closed");
+    /*const { issue } = this.state;
     close(issue.id);
-    this.loadIssue();
+    this.loadIssue();*/
   }
 
   onReabrir() {
-    reopen(this.state.issue.id);
-    this.loadIssue();
+    axiosChangeState(ID, "open");
   }
 
   render() {
@@ -61,7 +55,7 @@ class IssueDetail extends React.Component {
         <Link to="/" className="issue-volver">&lt; Volver</Link>
           {issue &&
             <div>
-              <h3>{issue.titulo} <span className="issue-id espacio  ">{`#${issue.id}`}</span></h3>
+              <h3>{issue.titulo} <span className="issue-id espacio  "><small>{`#${issue.id}`}</small></span></h3>
               {issue.estado === 'open' && <Badge pill variant="success">Abierto</Badge>}
               {issue.estado === 'closed' && <Badge pill variant="danger">Cerrado</Badge>}
               <span className="issue-usuario"> {issue.usuario}</span>
@@ -73,6 +67,7 @@ class IssueDetail extends React.Component {
                   </Card.Body>
                 </Card>
               </div>
+              {console.log("issue.estado:"), console.log(issue.estado) }
               {issue.estado === 'closed' &&
                 <div className="issue-estado espacio">
                   <Button onClick={this.onReabrir.bind(this)}>Reabrir</Button>
